@@ -1,0 +1,14 @@
+{% extends 'polls/base.html' %}
+
+{% block title%} Add new Question {% endblock title%}
+
+{% block content %}
+
+    <form action="{% url 'savequestion' %}" method="POST">
+        {% csrf_token %}
+         <p>Question: {{ question.question_text }}</p>
+         <input type="submit" value="Submit">
+         
+    </form>
+
+{% endblock content %}  
