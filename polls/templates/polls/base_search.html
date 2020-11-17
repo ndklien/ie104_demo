@@ -1,0 +1,14 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+    <h1>Search result{{ post|pluralize }}</h1>
+    <ul>
+        {% for question in object_list %}
+            <li>
+                {{ question.question_text }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

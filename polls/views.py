@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Question, Choice
+from django.db.models import Q
 
 # Create your views here.
 
@@ -69,3 +70,15 @@ def saveNewQuestion(request):
 
 def chooseQuestion(request):
     pass
+
+class Search_results(generic.ListView):
+    model = Question
+    template_name = 'polls/base_search.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Question.objects.filter(
+            Q(question_text__icontains=query)
+        )
+
+    

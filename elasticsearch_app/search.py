@@ -1,16 +1,20 @@
-from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import Text, Date, Document
+""" from elasticsearch_dsl.connections import connections
+from elasticsearch_dsl import Text, Date, Document, Integer
 
 #bulk indexing of data
 from elasticsearch.helpers import bulk
 from elasticsearch import Elasticsearch
-import models
+from .models import BlogPost
 
+
+#define a default Elasticsearch client
 connections.create_connection()
+
+
 class BlogPostIndex(Document):
-    author = Text()
+    author = Text(analyzer='snowball', fields={'raw': String(index='not_analyzed')})
     posted_date = Date()
-    title = Text()
+    title = Text(analyzer="snowball")
     text = Text()
     
     class Meta:
@@ -19,4 +23,5 @@ class BlogPostIndex(Document):
 def bulk_indexing():
     BlogPostIndex.init()
     es = Elasticsearch()
-    bulk(client=es, actions=(b.indexing() for b in models.BlogPost.objects.all().iterator()))
+    blogpost_all = BlogPost.objects.all()
+    bulk(client=es, actions=(b.indexing() for b in blogpost_all.iterator())) """

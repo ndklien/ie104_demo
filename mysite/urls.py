@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin, auth
 from django.urls import path, include
-from polls import views, forms
+from polls import views, forms 
+from polls.views import Search_results
 
 urlpatterns = [
     path('', views.home, name='home'), 
@@ -23,5 +24,6 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('addquestion/', views.addNewQuestion, name='addquestion'),
-    path('savequestion/', views.saveNewQuestion, name='savequestion')
+    path('savequestion/', views.saveNewQuestion, name='savequestion'),
+    path('search/', Search_results.as_view(), name='search_results'),
 ]

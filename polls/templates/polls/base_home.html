@@ -1,8 +1,16 @@
 {% extends "polls/base.html" %}
 
+{% load static %} 
+
 {% block title %} Homepage {% endblock title %}
 
 {% block content %}
     <h1>Welcome to our webpage</h1>
     <p>This is just a demo of our Homepage.</p>
+
+    <p>Search bar</p>
+    <form method="GET" action="{% url 'search_results' %}">
+        <input type="text" placeholder="Search here" name="q">
+        <button type="submit">Search</button>
+    </form>
 {% endblock %}
