@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from .forms import PushQuestionForm
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.core import serializers
+
+from .forms import PushQuestionForm, QuestionForm
 from django.urls import reverse
 from django.views import generic
 
@@ -80,4 +82,21 @@ class Search_results(generic.ListView):
             Q(question_text__icontains=query)
         )
 
-    
+def postQuestion(request):
+    if request.is_ajax and request.METHOD == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid:
+            instance = form.save()
+
+            ser_instance = serializers.serialize('json', [instance, ])
+            data_context = {
+                "instance": ser_instance
+            }
+            return JsonResponse(data_context, status=200)
+        else:
+            data_context = {
+                "error": form.errors
+            }
+            return JsonResponse(data_context, status=400)
+    else: return JsonResponse({"error": ""}, status=400)
+
