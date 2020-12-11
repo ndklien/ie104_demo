@@ -26,4 +26,5 @@ urlpatterns = [
     path('addquestion/', views.addNewQuestion, name='addquestion'),
     path('savequestion/', views.saveNewQuestion, name='savequestion'),
     path('search/', Search_results.as_view(), name='search_results'),
+    path('recommend/', views.recommendQuestion, name='recommend'),
 ]

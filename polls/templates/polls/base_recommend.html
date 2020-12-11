@@ -1,0 +1,16 @@
+{% extends 'polls/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    {{ questionList.form }}
+    <ul>
+        {% for question in questionList.qs %}
+        <li>
+            {{ question }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

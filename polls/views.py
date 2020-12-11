@@ -9,6 +9,8 @@ from django.views import generic
 from .models import Question, Choice
 from django.db.models import Q
 
+from .filters import QuestionFilter
+
 # Create your views here.
 
 question_list = Question.objects.all()
@@ -99,4 +101,25 @@ def postQuestion(request):
             }
             return JsonResponse(data_context, status=400)
     else: return JsonResponse({"error": ""}, status=400)
+
+def recommendQuestion(request):
+    quest = Question.objects.all()
+
+    questF = QuestionFilter(request.GET, queryset=quest)
+    # arr = []
+    # count = 0
+    # for quest in questF.qs:
+    #     if count < 3:
+    #         arr.append(quest)
+    #         count += 1
+    #     else:
+    #         break
+
+    context = {
+        'questionList': questF, 
+    }
+    return render(request, 'polls/base_recommend.html', context)
+
+
+
 
